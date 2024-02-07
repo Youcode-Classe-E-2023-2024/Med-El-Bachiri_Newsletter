@@ -23,3 +23,7 @@ Route::get('/{dir?}/{file?}', function ($dir = 'home', $file = 'index') {
         return abort(404);
     }
 });
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'store'])->name('register');
+Route::post('/', [AuthController::class, 'logout'])->name('logout');
