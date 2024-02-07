@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\View;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/{dir?}/{file?}', function ($dir = 'home', $file = 'index') {
+    if ($dir === 'layouts') {
+        return abort(404);
+    } elseif (View::exists($dir.'.'.$file)) {
+        return view($dir.'.'.$file);
+    } else {
+        return abort(404);
+    }
 });
