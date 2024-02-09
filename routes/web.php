@@ -1,6 +1,12 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\ForgotPWController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPWController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 /*
@@ -13,17 +19,32 @@ use Illuminate\Support\Facades\View;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/{dir?}/{file?}', function ($dir = 'home', $file = 'index') {
-    if ($dir === 'layouts') {
-        return abort(404);
-    } elseif (View::exists($dir.'.'.$file)) {
-        return view($dir.'.'.$file);
-    } else {
-        return abort(404);
-    }
+// home
+Route::middleware('guest')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/register', [AuthController::class, 'store'])->name('register');
-Route::post('/', [AuthController::class, 'logout'])->name('logout');
+// dashboard
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+// auth
+Route::middleware('guest')->group(function () {
+    // login
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+    // register
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register']);
+    // forgot pw
+    Route::get('/forgot-password', [ForgotPWController::class, 'index'])->name('password.forgot');
+    Route::post('/forgot-password', [ForgotPWController::class, 'send_reset_link']);
+    // reset pw
+    Route::get('/reset-password/{token}', [ResetPWController::class, 'index'])->name('password.reset');
+    Route::post('', [ResetPWController::class, 'reset_pw']);
+});
+
+// logout
+Route::post('/', [LogoutController::class, 'logout'])->name('logout');
