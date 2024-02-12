@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
-            $table->boolean('subscribed')->default(true);
+            $table->enum('subscribed', ['yes', 'no'])->default('yes');
             $table->timestamps();
         });
     }
