@@ -22,14 +22,10 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8'
         ]);
 
-        // Check if any users exist in the database
-        $role = User::count() === 0 ? 'admin' : 'editor';
-
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
-            'role' => $role
         ]);
         Auth::login($user);
         return back();
