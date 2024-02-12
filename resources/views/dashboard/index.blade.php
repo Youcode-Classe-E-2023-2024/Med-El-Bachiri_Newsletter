@@ -6,6 +6,9 @@
                 <div class="flex items-center gap-4 py-6 px-8">
                     <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">{{ auth()->user()->name }}</h6>
                 </div>
+                <div class="flex items-center gap-4  px-8">
+                    <h6 class="block antialiased tracking-normal font-sans text-sm font-semibold leading-relaxed text-green-400">{{ auth()->user()->getRoleNames('name')[0] }}</h6>
+                </div>
                 <div class="flex items-center gap-4 py-2 px-8">
                     <p class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-400 text-sm">{{ auth()->user()->email }}</p>
                 </div>
@@ -21,51 +24,63 @@
             <div class="m-4">
                 <ul class="mb-4 flex flex-col gap-1">
                     <li>
-                        <a aria-current="page" class="active" href="#">
-                            <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
+                        <div aria-current="page" class="active">
+                            <button onclick="showDiv('div1')" class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
                                     <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"></path>
                                     <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z"></path>
                                 </svg>
                                 <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">dashboard</p>
                             </button>
-                        </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="" href="#">
-                            <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
+                        <div class="">
+                            <button onclick="showDiv('div2')" class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
                                     <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">profile</p>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Subscribers</p>
                             </button>
-                        </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="" href="#">
-                            <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
+                        <div class="">
+                            <button onclick="showDiv('div3')" class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
                                     <path fill-rule="evenodd" d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 18.375V5.625zM21 9.375A.375.375 0 0020.625 9h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zM10.875 18.75a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5zM3.375 15h7.5a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375zm0-3.75h7.5a.375.375 0 00.375-.375v-1.5A.375.375 0 0010.875 9h-7.5A.375.375 0 003 9.375v1.5c0 .207.168.375.375.375z" clip-rule="evenodd"></path>
                                 </svg>
-                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">tables</p>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">media</p>
                             </button>
-                        </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="" href="#">
-                            <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
+                        <div class="">
+                            <button onclick="showDiv('div4')" class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
                                     <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">notifactions</p>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">template</p>
                             </button>
-                        </a>
+                        </div>
                     </li>
                 </ul>
                 <ul class="mb-4 flex flex-col gap-1">
                     <li class="mx-3.5 mt-4 mb-2">
                         <p class="block antialiased font-sans text-sm leading-normal text-white font-black uppercase opacity-75">auth pages</p>
                     </li>
+                    @if(auth()->user()->hasRole('admin'))
+                        <li>
+                            <div onclick="showDiv('div5')" class="">
+                                <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
+                                        <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">Roles</p>
+                                </button>
+                            </div>
+                        </li>
+                    @endif
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -80,7 +95,8 @@
                 </ul>
             </div>
         </aside>
-        <div class="p-4 xl:ml-80">
+
+        <div id="div1" class="p-4 xl:ml-80">
             <nav class="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
                 <div class="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
                     <div class="capitalize">
@@ -371,5 +387,343 @@
                 </footer>
             </div>
         </div>
+
+        <div id="div2" class="p-4 xl:ml-80">
+            <div class="w-full xl:w-8/12 px-4 mx-auto mt-24">
+                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white ">
+                    <div class="rounded-t mb-0 px-4 py-3 border-0">
+                        <div class="flex flex-wrap items-center">
+                            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                                <h3 class="font-semibold text-base text-blueGray-700">
+                                    Subscribers
+                                </h3>
+                            </div>
+                            <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                                <button class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                    Send Mail to Subscribers
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block w-full overflow-x-auto">
+                        <table class="items-center w-full border-collapse text-blueGray-700  ">
+                            <thead class="thead-light ">
+                            <tr>
+                                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Email
+                                </th>
+                                <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Status
+                                </th>
+                                <th class="px-6 bg-blueGray-50 text-blueGray-700 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($members as $member)
+                                <tr>
+                                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                        {{ $member->email }}
+                                    </th>
+                                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                        @if($member->subscribed === 'yes')
+                                            Subscribed
+                                        @else
+                                            <span class="text-red-500">Unsubscribed</span>
+                                        @endif
+                                    </td>
+                                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                        <form action="{{ route('unsubscribe', ['email' => $member->email]) }}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="bg-purple-200 p-2 rounded-xl shadow-sm border-purple-700 border-2 hover:shadow-xl hover:opacity-80">Unsubscribe User</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="div3" class="p-4 xl:ml-80"><!-- component -->
+            <!-- component -->
+            <div class="bg-gray-500 h-4/5 w-4/5 sm:px-8 md:px-16 sm:py-8">
+                <main class="container mx-auto max-w-screen-lg h-full">
+                    <!-- file upload modal -->
+                    <article aria-label="File Upload Modal" class="relative h-full flex flex-col bg-white shadow-xl rounded-md" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);">
+                        <!-- overlay -->
+                        <div id="overlay" class="w-full h-full absolute top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md">
+                            <i>
+                                <svg class="fill-current w-12 h-12 mb-3 text-blue-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M19.479 10.092c-.212-3.951-3.473-7.092-7.479-7.092-4.005 0-7.267 3.141-7.479 7.092-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h13c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408zm-7.479-1.092l4 4h-3v4h-2v-4h-3l4-4z" />
+                                </svg>
+                            </i>
+                            <p class="text-lg text-blue-700">Drop files to upload</p>
+                        </div>
+
+                        <!-- scroll area -->
+                        <section class="h-full overflow-auto p-8 w-full h-full flex flex-col">
+                            <header class="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
+                                <p class="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
+                                    <span>Drag and drop your</span>&nbsp;<span>files anywhere or</span>
+                                </p>
+                                <input id="hidden-input" type="file" multiple class="hidden" />
+                                <button id="button" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                    Upload a file
+                                </button>
+                            </header>
+
+                            <h1 class="pt-8 pb-3 font-semibold sm:text-lg text-gray-900">
+                                To Upload
+                            </h1>
+
+                            <ul id="gallery" class="flex flex-1 flex-wrap -m-1">
+                                <li id="empty" class="h-full w-full text-center flex flex-col items-center justify-center items-center">
+                                    <img class="mx-auto w-32" src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png" alt="no data" />
+                                    <span class="text-small text-gray-500">No files selected</span>
+                                </li>
+                            </ul>
+                        </section>
+
+                        <!-- sticky footer -->
+                        <footer class="flex justify-end px-8 pb-8 pt-4">
+                            <button id="submit" class="rounded-sm px-3 py-1 bg-blue-700 hover:bg-blue-500 text-white focus:shadow-outline focus:outline-none">
+                                Upload now
+                            </button>
+                            <button id="cancel" class="ml-3 rounded-sm px-3 py-1 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                Cancel
+                            </button>
+                        </footer>
+                    </article>
+                </main>
+            </div>
+
+            <!-- using two similar templates for simplicity in js code -->
+            <template id="file-template">
+                <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
+                    <article tabindex="0" class="group w-full h-full rounded-md focus:outline-none focus:shadow-outline elative bg-gray-100 cursor-pointer relative shadow-sm">
+                        <img alt="upload preview" class="img-preview hidden w-full h-full sticky object-cover rounded-md bg-fixed" />
+
+                        <section class="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                            <h1 class="flex-1 group-hover:text-blue-800"></h1>
+                            <div class="flex">
+              <span class="p-1 text-blue-800">
+                <i>
+                  <svg class="fill-current w-4 h-4 ml-auto pt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
+                  </svg>
+                </i>
+              </span>
+                                <p class="p-1 size text-xs text-gray-700"></p>
+                                <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md text-gray-800">
+                                    <svg class="pointer-events-none fill-current w-4 h-4 ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path class="pointer-events-none" d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </section>
+                    </article>
+                </li>
+            </template>
+
+            <template id="image-template">
+                <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
+                    <article tabindex="0" class="group hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm">
+                        <img alt="upload preview" class="img-preview w-full h-full sticky object-cover rounded-md bg-fixed" />
+
+                        <section class="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                            <h1 class="flex-1"></h1>
+                            <div class="flex">
+              <span class="p-1">
+                <i>
+                  <svg class="fill-current w-4 h-4 ml-auto pt-" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" />
+                  </svg>
+                </i>
+              </span>
+
+                                <p class="p-1 size text-xs"></p>
+                                <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md">
+                                    <svg class="pointer-events-none fill-current w-4 h-4 ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path class="pointer-events-none" d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </section>
+                    </article>
+                </li>
+            </template>
+
+            <script>
+                const fileTempl = document.getElementById("file-template"),
+                    imageTempl = document.getElementById("image-template"),
+                    empty = document.getElementById("empty");
+
+                // use to store pre selected files
+                let FILES = {};
+
+                // check if file is of type image and prepend the initialied
+                // template to the target element
+                function addFile(target, file) {
+                    const isImage = file.type.match("image.*"),
+                        objectURL = URL.createObjectURL(file);
+
+                    const clone = isImage
+                        ? imageTempl.content.cloneNode(true)
+                        : fileTempl.content.cloneNode(true);
+
+                    clone.querySelector("h1").textContent = file.name;
+                    clone.querySelector("li").id = objectURL;
+                    clone.querySelector(".delete").dataset.target = objectURL;
+                    clone.querySelector(".size").textContent =
+                        file.size > 1024
+                            ? file.size > 1048576
+                                ? Math.round(file.size / 1048576) + "mb"
+                                : Math.round(file.size / 1024) + "kb"
+                            : file.size + "b";
+
+                    isImage &&
+                    Object.assign(clone.querySelector("img"), {
+                        src: objectURL,
+                        alt: file.name
+                    });
+
+                    empty.classList.add("hidden");
+                    target.prepend(clone);
+
+                    FILES[objectURL] = file;
+                }
+
+                const gallery = document.getElementById("gallery"),
+                    overlay = document.getElementById("overlay");
+
+                // click the hidden input of type file if the visible button is clicked
+                // and capture the selected files
+                const hidden = document.getElementById("hidden-input");
+                document.getElementById("button").onclick = () => hidden.click();
+                hidden.onchange = (e) => {
+                    for (const file of e.target.files) {
+                        addFile(gallery, file);
+                    }
+                };
+
+                // use to check if a file is being dragged
+                const hasFiles = ({ dataTransfer: { types = [] } }) =>
+                    types.indexOf("Files") > -1;
+
+                // use to drag dragenter and dragleave events.
+                // this is to know if the outermost parent is dragged over
+                // without issues due to drag events on its children
+                let counter = 0;
+
+                // reset counter and append file to gallery when file is dropped
+                function dropHandler(ev) {
+                    ev.preventDefault();
+                    for (const file of ev.dataTransfer.files) {
+                        addFile(gallery, file);
+                        overlay.classList.remove("draggedover");
+                        counter = 0;
+                    }
+                }
+
+                // only react to actual files being dragged
+                function dragEnterHandler(e) {
+                    e.preventDefault();
+                    if (!hasFiles(e)) {
+                        return;
+                    }
+                    ++counter && overlay.classList.add("draggedover");
+                }
+
+                function dragLeaveHandler(e) {
+                    1 > --counter && overlay.classList.remove("draggedover");
+                }
+
+                function dragOverHandler(e) {
+                    if (hasFiles(e)) {
+                        e.preventDefault();
+                    }
+                }
+
+                // event delegation to caputre delete events
+                // fron the waste buckets in the file preview cards
+                gallery.onclick = ({ target }) => {
+                    if (target.classList.contains("delete")) {
+                        const ou = target.dataset.target;
+                        document.getElementById(ou).remove(ou);
+                        gallery.children.length === 1 && empty.classList.remove("hidden");
+                        delete FILES[ou];
+                    }
+                };
+
+                // print all selected files
+                document.getElementById("submit").onclick = () => {
+                    alert(`Submitted Files:\n${JSON.stringify(FILES)}`);
+                    console.log(FILES);
+                };
+
+                // clear entire selection
+                document.getElementById("cancel").onclick = () => {
+                    while (gallery.children.length > 0) {
+                        gallery.lastChild.remove();
+                    }
+                    FILES = {};
+                    empty.classList.remove("hidden");
+                    gallery.append(empty);
+                };
+
+            </script>
+
+            <style>
+                .hasImage:hover section {
+                    background-color: rgba(5, 5, 5, 0.4);
+                }
+                .hasImage:hover button:hover {
+                    background: rgba(5, 5, 5, 0.45);
+                }
+
+                #overlay p,
+                i {
+                    opacity: 0;
+                }
+
+                #overlay.draggedover {
+                    background-color: rgba(255, 255, 255, 0.7);
+                }
+                #overlay.draggedover p,
+                #overlay.draggedover i {
+                    opacity: 1;
+                }
+
+                .group:hover .group-hover\:text-blue-800 {
+                    color: #2b6cb0;
+                }
+            </style>
+        </div>
+
+        <div id="div4">
+            template
+        </div>
+
+        <div id="div5">
+            roles
+        </div>
     </div>
 @endsection
+
+<script>
+    function showDiv(divId) {
+        var divs = document.querySelectorAll('div[id^="div"]');
+        divs.forEach(function(div) {
+            if (div.id === divId) {
+                div.style.display = 'block';
+            } else {
+                div.style.display = 'none';
+            }
+        });
+    }
+</script>
