@@ -11,10 +11,20 @@
                     Subscribe to your newsletter to stay in the loop. Our newsletter is sent once in <br />
                     a week on every friday so subscribe to get latest news and updates.
                 </p>
-                <div class="sm:border border-white flex-col sm:flex-row flex items-center lg:w-5/12 w-full mt-12 space-y-4 sm:space-y-0">
-                    <input class="border border-white sm:border-transparent text-base w-full font-medium leading-none text-white p-4 focus:outline-none bg-transparent placeholder-white" placeholder="Email Address" />
-                    <button class="focus:outline-none focus:ring-offset-2 focus:ring border border-white sm:border-transparent w-full sm:w-auto bg-white py-4 px-6 hover:bg-opacity-75">Subscribe</button>
-                </div>
+                <label for="email">
+                </label>
+                <form action="{{ route('subscribe') }}" method="post" class="sm:border border-white flex-col sm:flex-row flex items-center lg:w-5/12 w-full mt-12 space-y-4 sm:space-y-0">
+                    @csrf
+                        <input id="email" name="email" class="border border-white sm:border-transparent text-base w-full font-medium leading-none text-white p-4 focus:outline-none bg-transparent placeholder-white" placeholder="Email Address" />
+                    <button type="submit" class="focus:outline-none focus:ring-offset-2 focus:ring border border-white sm:border-transparent w-full sm:w-auto bg-white py-4 px-6 hover:bg-opacity-75">Subscribe</button>
+                </form>
+                @error('email')
+                <p class="text-red-600 text-sm">{{ $message }}</p>
+                @enderror
+
+                @if(session('success'))
+                <p class="text-green-600 text-sm">{{ session('success') }}</p>
+                @endif
             </div>
         </div>
     </div>
