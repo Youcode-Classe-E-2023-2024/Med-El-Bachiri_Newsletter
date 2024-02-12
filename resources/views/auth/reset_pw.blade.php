@@ -15,8 +15,9 @@
                 </div>
 
                 <div class="mt-5">
-                    <form action="/reset-password" method="post">
-                        @csrf
+                    <form action="{{ route('reset_pw') }}" method="post">
+                    @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
                         <input type="hidden" name="email" value="{{ $email }}">
                         <div class="grid gap-y-4">
                             <div>
