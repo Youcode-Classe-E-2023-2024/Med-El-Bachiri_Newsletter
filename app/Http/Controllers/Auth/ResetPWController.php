@@ -37,12 +37,8 @@ class ResetPWController extends Controller
             }
         );
 
-        if ($status == Password::PASSWORD_RESET) {
-            Log::info('Password reset successful for email: ' . $request->email);
-            return redirect()->route('login')->with('status', __($status));
-        } else {
-            Log::error('Password reset failed: ' . $status);
-            return back()->withInput($request->only('email'))->withErrors(['email' => __($status)]);
-        }
+        return $status == Password::PASSWORD_RESET
+            ? redirect()->route('Auth.login')->with('status', __($status))
+            : back()->withInput($request->only('email'))->withErrors(['email' => __($status)]);
     }
 }
