@@ -6,10 +6,10 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPWController;
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Home\HomeController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,3 +49,8 @@ Route::middleware('guest')->group(function () {
 
 // logout
 Route::post('/', [LogoutController::class, 'logout'])->name('logout');
+
+// subscribe member
+//Route::get('/unsubscribe', [MemberController::class, 'subscribe'])->name('subscribe');
+Route::post('/subscribe', [MemberController::class, 'subscribe'])->name('subscribe');
+Route::put('/unsubscribe', [MemberController::class, 'unsubscribe'])->name('unsubscribe');
