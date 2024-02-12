@@ -3,7 +3,11 @@
     <!-- component -->
     <div class="bg-gray-300 h-screen overflow-hidden flex items-center justify-center">
         <div class="bg-white lg:w-5/12 md:6/12 w-10/12 shadow-3xl">
-
+            @if(session('status'))
+                <div class="alert alert-success">
+                    <p class="text-xs text-green-600 mt-2">{{ session('status') }}</p>
+                </div>
+            @endif
             @if (session('success'))
                 <div class="text-green-500 mt-2 ml-2 alert alert-success">
                     {{ session('success') }}
