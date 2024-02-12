@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPWController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 /*
@@ -43,7 +44,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/forgot-password', [ForgotPWController::class, 'send_reset_link']);
     // reset pw
     Route::get('/reset-password/{token}', [ResetPWController::class, 'index'])->name('password.reset');
-    Route::post('', [ResetPWController::class, 'reset_pw']);
+    Route::post('/reset-password', [ResetPWController::class, 'reset_pw'])->name('reset_pw');
 });
 
 // logout
