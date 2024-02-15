@@ -44,4 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function uploads(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Upload::class, 'created_by');
+    }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\ResetPWController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +31,15 @@ Route::middleware('guest')->group(function () {
 // dashboard
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // media
+    Route::post('/upload/store', [UploadController::class, 'store'])->name('upload.store');
+    Route::delete('/media/{media_id}/destroy', [UploadController::class, 'destroy'])->name('upload.delete');
+    // template
+    Route::post('/template/create', [TemplateController::class, 'store'])->name('template.store');
+    // send template page
+    Route::get('/send_template', [TemplateController::class, 'index'])->name('dashboard.send.mail');
 });
+
 
 // auth
 Route::middleware('guest')->group(function () {
@@ -48,7 +58,7 @@ Route::middleware('guest')->group(function () {
 });
 
 // logout
-Route::post('/', [LogoutController::class, 'logout'])->name('logout');
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // subscribe member
 //Route::get('/unsubscribe', [MemberController::class, 'subscribe'])->name('subscribe');
