@@ -31,7 +31,7 @@ class RegisterController extends Controller
         if ($user->email === 'admin@gmail.com') {
             $user->assignRole('admin');
         } else
-            $user->assignRole('editor');
+            $user->assignRole('Guest');
 
         Auth::login($user);
         return back();
