@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Member;
+use App\Models\Template;
 use App\Models\Upload;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use  Illuminate\Database\Eloquent\Collection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -17,6 +20,12 @@ class DashboardController extends Controller
         // get members aka subscribers
         $members = Member::all();
 
+        // templates
+        $tms = Template::all();
+
+        // get all users
+        $users = User::all();
+//        dd($users[0]->getRoleNames()->first());
         // user media
         $user_media = Upload::where('created_by', Auth::user()->id)->get();
         $user_media_array = [];
@@ -30,6 +39,6 @@ class DashboardController extends Controller
             ];
         };
 
-        return view('dashboard.index', ['members' => $members, 'user_media' => $user_media_array]);
+        return view('dashboard.index', ['members' => $members, 'user_media' => $user_media_array, 'all_users' => $users, 'templates' => $tms]);
     }
 }
