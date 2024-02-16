@@ -12,7 +12,7 @@ use JetBrains\PhpStorm\NoReturn;
 class UploadController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'name' => 'required|string',
