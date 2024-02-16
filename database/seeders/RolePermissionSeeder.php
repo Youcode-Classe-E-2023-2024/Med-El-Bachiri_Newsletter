@@ -15,40 +15,71 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         // roles
-        $admin_role = Role::create(['name' => 'admin']);
-        $editor_role = Role::create(['name' => 'editor']);
+
+        $administrator = Role::create(['name' => 'admin']);
+        $content_manager = Role::create(['name' => 'Content Manager']);
+        $email_marketer = Role::create(['name' => 'Email Marketer']);
+        $guest = Role::create(['name' => 'Guest']);
 
         // permissions
         $unsubscribe_user = Permission::create(['name' => 'unsubscribe user']);
         $upload_media = Permission::create(['name' => 'upload media']);
+        $see_media = Permission::create(['name' => 'see media']);
         $delete_media = Permission::create(['name' => 'delete media']);
-        $crete_template = Permission::create(['name' => 'create template']);
+        $create_template = Permission::create(['name' => 'create template']);
         $delete_template = Permission::create(['name' => 'delete template']);
         $send_mail = Permission::create(['name' => 'send mail']);
-        $assign_role = Permission::create(['name' => 'assign role']);
+        $manage_roles = Permission::create(['name' => 'manage roles']);
+        $view_statistics = Permission::create(['name' => 'view statistics']);
+        $view_subscribers = Permission::create(['name' => 'view subscribers']);
+        $see_templates = Permission::create(['name' => 'see templates']);
 
         // assign permissions to roles
-            // admin
-            $admin_role->givePermissionTo([
-                $assign_role,
-
+            // administrator
+            $administrator->givePermissionTo([
+                $manage_roles,
                 $upload_media,
                 $delete_media,
-                $crete_template,
+                $create_template,
                 $delete_template,
                 $send_mail,
-                $unsubscribe_user
+                $unsubscribe_user,
+                $view_statistics,
+                $view_subscribers,
+                $see_media,
+                $see_templates
             ]);
 
-            // editor
-            $editor_role->givePermissionTo([
+            // content manager
+            $content_manager->givePermissionTo([
                 $upload_media,
                 $delete_media,
-                $crete_template,
+                $see_media,
+                $create_template,
                 $delete_template,
-                $send_mail,
-                $unsubscribe_user
+                $view_subscribers,
+                $view_statistics,
+                $see_templates
             ]);
+
+            // email marketer
+            $email_marketer->givePermissionTo([
+                $send_mail,
+                $upload_media,
+                $see_media,
+                $delete_media,
+                $view_statistics,
+                $view_subscribers,
+                $see_templates
+            ]);
+
+            // guest
+            $guest->givePermissionTo([
+                $view_statistics,
+                $view_subscribers,
+                $see_templates
+            ]);
+            //
         //
     }
 }
