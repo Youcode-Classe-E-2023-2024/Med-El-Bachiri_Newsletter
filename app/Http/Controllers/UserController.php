@@ -9,48 +9,18 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function updateRole(Request $request, User $user): \Illuminate\Http\RedirectResponse
     {
-        //
+//        dd($request->user_id);
+        $validatedData = $request->validate([
+            'role' => 'required|in:admin,Guest,Email Marketer,Content Manager',
+        ]);
+
+        User::find($request->user_id)->syncRoles([$validatedData['role']]);
+
+        return back()->with('success', 'User role updated successfully');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
