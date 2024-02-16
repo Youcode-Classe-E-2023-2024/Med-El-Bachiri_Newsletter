@@ -79,7 +79,7 @@
                     <li class="mx-3.5 mt-4 mb-2">
                         <p class="block antialiased font-sans text-sm leading-normal text-white font-black uppercase opacity-75">auth pages</p>
                     </li>
-                    @if(auth()->user()->hasRole('admin'))
+{{--                    @if(auth()->user()->hasRole('admin'))--}}
                         <li>
                             <div onclick="showDiv('div6')" class="">
                                 <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
@@ -90,7 +90,17 @@
                                 </button>
                             </div>
                         </li>
-                    @endif
+                    <li>
+                        <div onclick="showDiv('div7')" class="">
+                            <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
+                                    <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">See Templates</p>
+                            </button>
+                        </div>
+                    </li>
+{{--                    @endif--}}
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -108,7 +118,10 @@
         @if(session('success'))
             <p class="text-green-900 border-2 p-2 border-green-800 rounded-lg bg-green-300 pl-96" >{{ session('success') }}</p>
         @endif
+
+        <!-- DIV 1 -->
         <div id="div1" class="p-4 xl:ml-80">
+            @if(Auth::user()->hasPermissionTo('view statistics'))
             <nav class="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
                 <div class="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
                     <div class="capitalize">
@@ -398,9 +411,15 @@
                     </div>
                 </footer>
             </div>
+            @else
+                <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">Err 1 :you don't have this permission</h1>
+            @endif
         </div>
 
+
+        <!-- DIV 2 -->
         <div id="div2" class="p-4 xl:ml-80">
+        @if(Auth::user()->hasPermissionTo('view subscribers'))
             <div class="w-full xl:w-8/12 px-4 mx-auto mt-24">
                 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white ">
                     <div class="rounded-t mb-0 px-4 py-3 border-0">
@@ -410,11 +429,13 @@
                                     Subscribers
                                 </h3>
                             </div>
+                            @if(Auth::user()->hasPermissionTo('send mail'))
                             <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                                 <a href="{{ route('dashboard.send.mail') }}" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                     Send Mail to Subscribers
                                 </a>
                             </div>
+                            @endif
                         </div>
                     </div>
 
@@ -444,6 +465,7 @@
                                             <span class="text-red-500">Unsubscribed</span>
                                         @endif
                                     </td>
+                                    @if(Auth::user()->hasPermissionTo('unsubscribe user'))
                                     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <form action="{{ route('unsubscribe', ['email' => $member->email]) }}" method="post">
                                             @csrf
@@ -451,6 +473,7 @@
                                             <button type="submit" class="bg-purple-200 p-2 rounded-xl shadow-sm border-purple-700 border-2 hover:shadow-xl hover:opacity-80">Unsubscribe User</button>
                                         </form>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
@@ -458,10 +481,15 @@
                     </div>
                 </div>
             </div>
-
+            @else
+                <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">Err 2 : you don't have this permission</h1>
+            @endif
         </div>
 
+
+        <!-- DIV 3 -->
         <div id="div3" class="p-4 xl:ml-80"><!-- component -->
+        @if(Auth::user()->hasPermissionTo('upload media'))
             <div class="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center"
 
                  style="background-image: url(https://images.unsplash.com/photo-1621243804936-775306a8f2e3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80);">
@@ -533,9 +561,15 @@
                 }
             </script>
 
+        @else
+            <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">Err 3 : you don't have this permission</h1>
+        @endif
         </div>
 
+
+        <!-- DIV 4 -->
         <div id="div4" class="p-4 xl:ml-80">
+        @if(Auth::user()->hasPermissionTo('see media'))
             @foreach($user_media as $item)
             <section class="pt-10 pb-10 bg-[#F3F4F6]">
                 <div class="container">
@@ -550,6 +584,7 @@
                                     <p class="text-base text-body-color leading-relaxed mb-4">
                                         {{ $item['name'] }}
                                     </p>
+                                    @if(Auth::user()->hasPermissionTo('delete media'))
                                     <form action="{{ route('upload.delete', ['media_id' => $item['id']]) }}" method="post">
                                         @csrf
                                         @method('DELETE')
@@ -557,6 +592,7 @@
                                             Delete Media
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -564,9 +600,15 @@
                 </div>
             </section>
             @endforeach
+        @else
+            <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">Err 4 : you don't have this permission</h1>
+            @endif
         </div>
 
+
+        <!-- DIV 5 -->
         <div id="div5" class="p-4 xl:ml-80">
+        @if(Auth::user()->hasPermissionTo('create template'))
             <!-- component -->
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -603,25 +645,90 @@
             <script>
                 CKEDITOR.replace('content');
             </script>
+        @else
+            <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">Err 5 : you don't have this permission</h1>
+        @endif
         </div>
 
 
+        <!-- DIV 6 -->
         <div id="div6" class="p-4 xl:ml-80">
-        @if(Auth::user()->hasRole('admin'))
+        @if(Auth::user()->hasPermissionTo('manage roles'))
 
-            <div class="mb-8">
-                <label class="text-xl text-gray-600">Select Files</label><br>
-{{--                @foreach($all_media as $file)--}}
-{{--                    <div class="flex items-center mb-2">--}}
-{{--                        <input type="checkbox" name="selected_files[]" value="{{ $file['id'] }}" id="file_{{ $file['id'] }}">--}}
-{{--                        <label for="file_{{ $file['id'] }}" class="ml-2 cursor-pointer">--}}
-{{--                            <img src="{{ asset($file['url']) }}" alt="{{ $file['name'] }}" class="w-10 h-10 object-cover rounded-full">--}}
-{{--                            <span class="ml-2">{{ $file['name'] }}</span>--}}
-{{--                        </label>--}}
-{{--                    </div>--}}
-{{--                @endforeach--}}
-            </div>
+                <div class="flex items-center justify-center min-h-screen bg-gray-900">
+                    <div class="col-span-12">
+                        <div class="overflow-auto lg:overflow-visible ">
+                            <table class="table text-gray-400 border-separate space-y-6 text-sm">
+                                <thead class="bg-gray-800 text-gray-500">
+                                <tr>
+                                    <th class="p-3">ID</th>
+                                    <th class="p-3">Name</th>
+                                    <th class="p-3">Email</th>
+                                    <th class="p-3">Account Created At</th>
+                                    <th class="p-3">Roles</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Your PHP logic to fetch and display users from the database here -->
+                                <!-- Example row -->
+                                @foreach($all_users as $single_user)
+                                    <tr class="bg-gray-800">
+                                        <td class="p-3">{{ $single_user->id }}</td>
+                                        <td class="p-3">{{ $single_user->name }}</td>
+                                        <td class="p-3">{{ $single_user->email }}</td>
+                                        <td class="p-3">{{ $single_user->created_at }}</td>
+                                        <td class="p-3">
+                                            <form action="{{ route('update_user_role', ['user_id' => $single_user->id]) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <select name="role" class="bg-gray-800 border border-gray-600 text-white rounded-md px-2 py-1 focus:outline-none">
+                                                    @foreach(['admin', 'Guest', 'Email Marketer', 'Content Manager'] as $role) <!-- Replace with your actual roles -->
+                                                    <option value="{{ $role }}" {{ $single_user->getRoleNames()->first() === $role ? 'selected' : '' }}>{{ $role }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="submit" class="text-gray-400 hover:text-gray-100 mr-2">
+                                                    <i class="material-icons-outlined text-base text-green-400 px-2 hover:underline">save</i>
+                                                </button>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            @else
+            <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">you don't have this permission</h1>
         @endif
+        </div>
+
+
+        <!-- DIV 7 -->
+        <div id="div7" class="p-4 xl:ml-80">
+            @if(Auth::user()->hasPermissionTo('unsubscribe user'))
+            <div class="overflow-y-auto">
+                @foreach($templates as $tmp)
+                    <div class="border-red-500 border-2 rounded-lg p-2 my-2">
+                        {!! $tmp->content !!}
+
+                        @if(Auth::user()->hasPermissionTo('delete template'))
+                            <form action="{{ route('delete_template', ['tmp_id' => $tmp->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class=" p-2 bg-gray-100 rounded-lg shadow-lg border-2 border-black bg-red-500">Delete Template</button>
+                            </form>
+                            <button type="button" class="bg-purple-400 border border-black p-2 shadow-lg">Download Template</button>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+
+                        @else
+                <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">you don't have this permission</h1>
+            @endif
         </div>
     </div>
 @endsection
