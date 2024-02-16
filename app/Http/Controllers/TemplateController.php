@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendMailToSubs;
+use App\Models\Member;
 use App\Models\Template;
 use App\Models\Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class TemplateController extends Controller
 {
@@ -28,6 +32,7 @@ class TemplateController extends Controller
                 'url' => $item->getMedia('images')->first()->getUrl()
             ];
         }
+//        dd($tms[3]->used_times);
         return view('dashboard.send_template', ['all_media' => $all_media_array, 'templates' => $tms]);
     }
 
@@ -52,32 +57,32 @@ class TemplateController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+    public function send_mail(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
-        //
+//        dd($request->input('selected_media'));
+        $media = Media::where('model_id', $request->input('selected_media'))->first();
+//        dd($media->model_id);
+        $file_name = $media->file_name;
+        $file_id = $media->id;
+
+        $tmp = Template::find($request->input('template_selected'));
+        $template = $tmp->content;
+
+        $subs = Member::where('subscribed', 'yes')->get();
+
+        foreach ($subs as $sub) {
+            Mail::to($sub->email)->send(new SendMailToSubs($template, $file_name, $file_id));
+        }
+        $tmp->used_times++;
+        $tmp->save();
+        return redirect('dashboard')->with('success', 'Mail is sent to all the subscribers successfully !!!');
     }
 
-    public function show_all()
+    public function delete_template(Request $request): \Illuminate\Http\RedirectResponse
     {
-        Template::all();
+        Template::destroy($request->tmp_id);
+        return back()->with('success', 'Template deleted successfully');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
