@@ -10,6 +10,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,10 +38,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/media/{media_id}/destroy', [UploadController::class, 'destroy'])->name('upload.delete');
     // template
     Route::post('/template/create', [TemplateController::class, 'store'])->name('template.store');
-    // send template page
-    Route::get('/send_template', [TemplateController::class, 'index'])->name('dashboard.send.mail');
+
+    // update users roles
+    Route::put('update_user_role/{user_id}', [UserController::class, 'updateRole'])->name('update_user_role');
+
+    // delete template
+    Route::delete('/delete_template/{tmp_id}', [TemplateController::class, 'delete_template'])->name('delete_template');
 });
 
+Route::middleware('checkSendMailPermission')->group(function () {
+    // send template page
+    Route::get('/send_template', [TemplateController::class, 'index'])->name('dashboard.send.mail');
+    // send mail to subs
+    Route::post('/sendMailToSubs', [TemplateController::class, 'send_mail'])->name('sendMailToSubs');
+
+});
 
 // auth
 Route::middleware('guest')->group(function () {
