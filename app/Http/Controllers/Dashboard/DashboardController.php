@@ -27,11 +27,12 @@ class DashboardController extends Controller
         $users = User::all();
 //        dd($users[0]->getRoleNames()->first());
         // user media
-        $user_media = Upload::where('created_by', Auth::user()->id)->get();
-        $user_media_array = [];
+        $all_media = Upload::all();
 
-        foreach ($user_media as $item) {
-            $user_media_array[] = [
+        $all_media_array = [];
+
+        foreach ($all_media as $item) {
+            $all_media_array[] = [
                 'id' => $item->id,
                 'url' => $item->getMedia('images')->first()->getUrl(),
                 'name' => $item->name,
@@ -39,6 +40,6 @@ class DashboardController extends Controller
             ];
         };
 
-        return view('dashboard.index', ['members' => $members, 'user_media' => $user_media_array, 'all_users' => $users, 'templates' => $tms]);
+        return view('dashboard.index', ['members' => $members, 'all_media' => $all_media_array, 'all_users' => $users, 'templates' => $tms]);
     }
 }

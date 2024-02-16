@@ -70,7 +70,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
                                     <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">template</p>
+                                <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">create template</p>
                             </button>
                         </div>
                     </li>
@@ -570,7 +570,7 @@
         <!-- DIV 4 -->
         <div id="div4" class="p-4 xl:ml-80">
         @if(Auth::user()->hasPermissionTo('see media'))
-            @foreach($user_media as $item)
+            @foreach($all_media as $item)
             <section class="pt-10 pb-10 bg-[#F3F4F6]">
                 <div class="container">
                     <div class="flex flex-wrap -mx-4">
@@ -584,7 +584,7 @@
                                     <p class="text-base text-body-color leading-relaxed mb-4">
                                         {{ $item['name'] }}
                                     </p>
-                                    @if(Auth::user()->hasPermissionTo('delete media'))
+                                    @if(Auth::user()->hasPermissionTo('delete media') && $item['created_by'] === Auth::user()->id || Auth::user()->getRoleNames()->first() === 'admin')
                                     <form action="{{ route('upload.delete', ['media_id' => $item['id']]) }}" method="post">
                                         @csrf
                                         @method('DELETE')
@@ -708,10 +708,11 @@
 
         <!-- DIV 7 -->
         <div id="div7" class="p-4 xl:ml-80">
-            @if(Auth::user()->hasPermissionTo('unsubscribe user'))
+            @if(Auth::user()->hasPermissionTo('see templates'))
             <div class="overflow-y-auto">
                 @foreach($templates as $tmp)
                     <div class="border-red-500 border-2 rounded-lg p-2 my-2">
+                        <p class="p-2 m-2 border border-black text-black">{{ $tmp->title }}</p>
                         {!! $tmp->content !!}
 
                         @if(Auth::user()->hasPermissionTo('delete template'))
@@ -720,13 +721,14 @@
                                 @method('DELETE')
                                 <button type="submit" class=" p-2 bg-gray-100 rounded-lg shadow-lg border-2 border-black bg-red-500">Delete Template</button>
                             </form>
-                            <button type="button" class="bg-purple-400 border border-black p-2 shadow-lg">Download Template</button>
+{{--                            <form action="{{ route('download_template') }}" method="post"></form>--}}
                         @endif
+                            <a href="{{ route('download_template', ['tmp_id' => $tmp->id]) }}" type="button" class="bg-purple-400 border border-black p-2 shadow-lg">Download Template</a>
                     </div>
                 @endforeach
             </div>
 
-                        @else
+            @else
                 <h1 class="text-red-600 text-xl border-2 border-red-800 p-6 rounded-lg mx-auto">you don't have this permission</h1>
             @endif
         </div>

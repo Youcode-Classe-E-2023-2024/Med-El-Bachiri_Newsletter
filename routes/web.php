@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
 
     // delete template
     Route::delete('/delete_template/{tmp_id}', [TemplateController::class, 'delete_template'])->name('delete_template');
+
+    // download template
+    Route::get('download_template/{tmp_id}', [TemplateController::class, 'download_template'])->name('download_template');
 });
 
 Route::middleware('checkSendMailPermission')->group(function () {

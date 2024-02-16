@@ -7,7 +7,11 @@ use App\Mail\SendMailToSubs;
 use App\Models\Member;
 use App\Models\Template;
 use App\Models\Upload;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -85,4 +89,26 @@ class TemplateController extends Controller
         return back()->with('success', 'Template deleted successfully');
     }
 
+
+    public function download_template(Request $request)
+    {
+
+//        dd($request->tmp_id);
+
+        $tmp = Template::find($request->tmp_id);
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+//        dd($tmp->content);
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($tmp->content);
+
+        try {
+            $dompdf->setPaper('a4', 'landscape');
+            $dompdf->render();
+            $dompdf->stream($tmp->title.'.pdf');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+    }
 }
