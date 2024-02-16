@@ -40,6 +40,15 @@ class DashboardController extends Controller
             ];
         };
 
-        return view('dashboard.index', ['members' => $members, 'all_media' => $all_media_array, 'all_users' => $users, 'templates' => $tms]);
+        // statistics
+
+
+
+        return view('dashboard.index', [
+            'members' => $members,
+            'all_media' => $all_media_array,
+            'all_users' => $users,
+            'templates' => $tms
+        ]);
     }
 }
